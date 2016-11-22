@@ -5,7 +5,13 @@ RSpec.describe ChangeMaker do
 
     context 'when making change for 1 cent' do
       it 'finds one way to make change' do
-        expect(subject.change_ways(1)).to eq(1)
+        expect(subject.ways_to_make_change(1)).to eq(1)
+      end
+    end
+
+    context 'when making change for 5 cents' do
+      it 'finds two ways to make change' do
+        expect(subject.ways_to_make_change(5)).to eq(2)
       end
     end
   end
