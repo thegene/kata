@@ -43,5 +43,14 @@ RSpec.describe ChangeMaker do
         ])
       end
     end
+
+    context 'when making change for 1000 cents' do
+      let(:number) { 1000 }
+
+      it 'finds a lot of ways to make change' do
+        expect(subject.count).to eq(4)
+      end
+
+    end
   end
 end
