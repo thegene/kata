@@ -1,7 +1,7 @@
 require './change_maker/change_maker'
 RSpec.describe ChangeMaker do
   context 'Given a ChangeMaker' do
-    subject { described_class.new.ways_to_make_change(number) }
+    subject { described_class.new.make_change_for(number) }
 
     context 'when making change for 1 cent' do
       let(:number) { 1 }
@@ -34,13 +34,21 @@ RSpec.describe ChangeMaker do
         expect(subject.count).to eq(4)
       end
 
-      it 'is only a penny' do
+      it 'finds a bunch of ways' do
         expect(subject).to match_array([
           [10, 1],
           [5, 5, 1],
           [5, 1, 1, 1, 1, 1, 1],
           [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
         ])
+      end
+    end
+
+    context 'when making change for 200 cents' do
+      let(:number) { 50 }
+
+      it 'finds a lot of ways to make change' do
+        expect(subject.count).to eq(49)
       end
     end
 

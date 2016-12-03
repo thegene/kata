@@ -1,55 +1,44 @@
-require 'pry'
 class ChangeMaker
-  attr_accessor :memo
-
-  def initialize
-    @memo = {}
+  def make_change_for(number)
+    all_combos_with(number, [25, 10, 5, 1])
   end
 
-  def ways_to_make_change(number)
-    ways = find_ways_in(number, all_coins)
-    ways
-  end
+  def all_combos_with(target, coins)
+    [].tap do |combos|
+      while coin = coins.shift
+        parts = get_parts_for(target, coin)
+        parts.each do |part|
+          new_target = target - sum(part)
 
-  private
+          new_parts = all_combos_with(new_target, coins.dup)
+          if new_parts.empty?
+            combos << part
+          else
+            new_parts.each do |new_part|
+              combos << part + new_part
+            end
+          end
 
-  def find_ways_in(number, coins, try=[])
-    value = sum(try)
-    target = number - value
-
-    if value == number
-      [try]
-    else
-      find_for_each_coin(number, coins, try)
-    end
-  end
-
-  def find_for_each_coin(number, coins, try)
-    ways = []
-    while coin = coins.shift do
-      coin_count = (number - sum(try)) / coin
-
-      if coin == 1 # pennies no need to iterate
-        ways.push try + Array.new(coin_count, coin)
-      else
-        for i in (1..coin_count).to_a.reverse
-          new_way = try + Array.new(i, coin)
-
-          way = find_ways_in(number, coins.dup, new_way)
-          ways.push(way.first)
         end
       end
     end
-
-    ways
   end
 
-  def all_coins
-    [25, 10, 5, 1]
+  def get_parts_for(target, coin)
+    [].tap do |parts|
+      count = target / coin
+      if coin == 1
+        parts << Array.new(count, coin)
+      else
+        while count > 0 do
+          parts << Array.new(count, coin)
+          count -= 1
+        end
+      end
+    end
   end
 
-  def sum(try)
-    try.reduce(&:+) || 0
+  def sum(array)
+    array.reduce(&:+) || 0
   end
-
 end
