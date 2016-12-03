@@ -1,26 +1,33 @@
 require 'pry'
 class ChangeMaker
+  attr_accessor :ways
+
+  def initialize
+    @ways = []
+  end
 
   def ways_to_make_change(number)
     find_ways_in(number, all_coins)
   end
 
-  def find_ways_in(number, coins_available, try=[])
-    ways = []
+  private
 
-    while coin = coins_available.shift do
+  def find_ways_in(number, coins, try=[])
+    target = number - sum(try)
+
+    while coin = coins.shift do
       coin_count = (number - sum(try)) / coin
 
       while coin_count > 0 do
-        new_way = try + Array.new(coin_count, coin)
+        new_try = Array.new(coin_count, coin)
+        new_way = try + new_try
         
-        target = number - sum(new_way)
+        new_target = target - sum(new_try)
 
-        if target == 0
+        if new_target == 0
           ways.push(new_way)
-        elsif target > 0
-          way = find_ways_in(number, coins_available.dup, new_way)
-          ways.push(way.first) unless way.empty?
+        elsif new_target > 0
+          find_ways_in(number, coins.dup, new_way)
         end
 
         coin_count -= 1
@@ -29,8 +36,6 @@ class ChangeMaker
 
     ways
   end
-
-  private
 
   def all_coins
     [25, 10, 5, 1]
