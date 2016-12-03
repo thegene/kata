@@ -7,7 +7,8 @@ class ChangeMaker
   end
 
   def ways_to_make_change(number)
-    find_ways_in(number, all_coins)
+    ways = find_ways_in(number, all_coins)
+    ways
   end
 
   private
@@ -28,11 +29,15 @@ class ChangeMaker
     while coin = coins.shift do
       coin_count = (number - sum(try)) / coin
 
-      for i in (1..coin_count).to_a.reverse
-        new_way = try + Array.new(i, coin)
+      if coin == 1 # pennies no need to iterate
+        ways.push try + Array.new(coin_count, coin)
+      else
+        for i in (1..coin_count).to_a.reverse
+          new_way = try + Array.new(i, coin)
 
-        way = find_ways_in(number, coins.dup, new_way)
-        ways.push(way.first) unless way.empty?
+          way = find_ways_in(number, coins.dup, new_way)
+          ways.push(way.first)
+        end
       end
     end
 
