@@ -1,9 +1,8 @@
 require 'pry'
 class ChangeMaker
-  attr_accessor :ways, :memo
+  attr_accessor :memo
 
   def initialize
-    @ways = []
     @memo = {}
   end
 
@@ -18,24 +17,26 @@ class ChangeMaker
     target = number - value
 
     if value == number
-      ways.push(try)
+      [try]
     else
-      find_for_each_coin(number, coins.dup, try)
+      find_for_each_coin(number, coins, try)
     end
-
-    ways
   end
 
   def find_for_each_coin(number, coins, try)
+    ways = []
     while coin = coins.shift do
       coin_count = (number - sum(try)) / coin
 
       for i in (1..coin_count).to_a.reverse
         new_way = try + Array.new(i, coin)
 
-        find_ways_in(number, coins.dup, new_way)
+        way = find_ways_in(number, coins.dup, new_way)
+        ways.push(way.first) unless way.empty?
       end
     end
+
+    ways
   end
 
   def all_coins
