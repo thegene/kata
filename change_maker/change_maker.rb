@@ -20,21 +20,22 @@ class ChangeMaker
     if value == number
       ways.push(try)
     else
-      while coin = coins.shift do
-        coin_count = (number - sum(try)) / coin
-
-        while coin_count > 0 do
-          new_try = Array.new(coin_count, coin)
-          new_way = try + new_try
-
-          find_ways_in(number, coins.dup, new_way)
-
-          coin_count -= 1
-        end
-      end
+      find_for_each_coin(number, coins.dup, try)
     end
 
     ways
+  end
+
+  def find_for_each_coin(number, coins, try)
+    while coin = coins.shift do
+      coin_count = (number - sum(try)) / coin
+
+      for i in (1..coin_count).to_a.reverse
+        new_way = try + Array.new(i, coin)
+
+        find_ways_in(number, coins.dup, new_way)
+      end
+    end
   end
 
   def all_coins
