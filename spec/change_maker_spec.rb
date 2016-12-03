@@ -30,11 +30,11 @@ RSpec.describe ChangeMaker do
     context 'when making change for 11 cents' do
       let(:number) { 11 }
 
-      it 'finds three ways to make change' do
+      it 'finds four ways to make change' do
         expect(subject.count).to eq(4)
       end
 
-      it 'finds a bunch of ways' do
+      it 'will report what these four ways are' do
         expect(subject).to match_array([
           [10, 1],
           [5, 5, 1],
@@ -52,11 +52,11 @@ RSpec.describe ChangeMaker do
       end
     end
 
-    xcontext 'when making change for 200 cents' do
-      let(:number) { 200 }
+    context 'when making change for 1000 cents' do
+      let(:number) { 1000 }
 
       it 'finds a lot of ways to make change' do
-        expect(subject.count).to eq(4)
+        expect(subject.count).to eq(142511)
       end
 
     end
