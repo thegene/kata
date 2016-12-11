@@ -10,4 +10,12 @@ RSpec.describe Fibonacci do
       expect(subject).to be(0)
     end
   end
+
+  context 'Given we want the first fibonacci number' do
+    let(:number) { 1 }
+
+    it 'returns 1' do
+      expect(subject).to be(1)
+    end
+  end
 end
