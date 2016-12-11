@@ -6,28 +6,33 @@ class ChangeMaker
 
   def all_combos_with(target, coins)
     combos = []
+    memo[target] ||= {}
 
     while coin = coins.shift
-      combos_for_coin = []
+      if !memo[target][coin]
 
-      parts = get_parts_for(target, coin)
-      parts.each do |part|
-        remainder = target - sum(part)
+        combos_for_coin = []
 
-        if remainder == 0
-          combos_for_coin << part
-        else
+        parts = get_parts_for(target, coin)
+        parts.each do |part|
+          remainder = target - sum(part)
 
-          new_parts = all_combos_with(remainder, coins.dup)
-          new_parts.each do |new_part|
-            combos_for_coin << part + new_part
+          if remainder == 0
+            combos_for_coin << part
+          else
+
+            new_parts = all_combos_with(remainder, coins.dup)
+            new_parts.each do |new_part|
+              combos_for_coin << part + new_part
+            end
+
           end
 
         end
 
+        memo[target][coin] = combos_for_coin
       end
-
-      combos += combos_for_coin
+      combos += memo[target][coin]
     end
 
     combos
@@ -49,5 +54,9 @@ class ChangeMaker
 
   def sum(array)
     array.reduce(&:+) || 0
+  end
+
+  def memo
+    @memo ||= {}
   end
 end
