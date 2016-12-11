@@ -8,9 +8,9 @@ class ChangeMaker
       while coin = coins.shift
         parts = get_parts_for(target, coin)
         parts.each do |part|
-          new_target = target - sum(part)
+          remainder = target - sum(part)
 
-          new_parts = all_combos_with(new_target, coins.dup)
+          new_parts = all_combos_with(remainder, coins.dup)
           if new_parts.empty?
             combos << part
           else
