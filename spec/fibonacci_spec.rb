@@ -1,8 +1,7 @@
 require './fibonacci/fibonacci'
 
 RSpec.describe Fibonacci do
-  let(:instance) { described_class.new }
-  subject { instance.find(number) }
+  subject { described_class.new.find(number) }
 
   context 'Given we want the zero-eth fibonacci number' do
     let(:number) { 0 }
@@ -25,6 +24,22 @@ RSpec.describe Fibonacci do
 
     it 'returns 1' do
       expect(subject).to eq(1)
+    end
+  end
+
+  context 'Given we want the seventh number' do
+    let(:number) { 7 }
+
+    it 'returns lucky ol thirteen' do
+      expect(subject).to eq(13)
+    end
+  end
+
+  context 'Given we want the tenth number' do
+    let(:number) { 10 }
+
+    it 'returns 55' do
+      expect(subject).to eq(55)
     end
   end
 end
