@@ -10,13 +10,15 @@ class ChangeMaker
         parts.each do |part|
           remainder = target - sum(part)
 
-          new_parts = all_combos_with(remainder, coins.dup)
-          if new_parts.empty?
+          if remainder == 0
             combos << part
           else
+
+            new_parts = all_combos_with(remainder, coins.dup)
             new_parts.each do |new_part|
               combos << part + new_part
             end
+
           end
 
         end
