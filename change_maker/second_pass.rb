@@ -38,6 +38,11 @@ module ChangeMaker
 
             if new_value == 0
               paths << combo
+            else
+              secondary_paths = all_paths_for(new_value, coins.dup)
+              secondary_paths.each do |secondary|
+                paths << combo + secondary
+              end
             end
           end
 

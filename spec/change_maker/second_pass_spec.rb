@@ -28,7 +28,7 @@ RSpec.describe ChangeMaker::SecondPass do
       end
     end
 
-    xcontext 'when making change for 11 cents' do
+    context 'when making change for 11 cents' do
       let(:number) { 11 }
 
       it 'finds four ways to make change' do
