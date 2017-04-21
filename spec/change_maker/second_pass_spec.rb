@@ -4,7 +4,7 @@ RSpec.describe ChangeMaker::SecondPass do
   context 'Given a ChangeMaker' do
     subject { described_class.new.make_change_for(number) }
 
-    fcontext 'when making change for 1 cent' do
+    context 'when making change for 1 cent' do
       let(:number) { 1 }
 
       it 'finds one way to make change' do
@@ -28,7 +28,7 @@ RSpec.describe ChangeMaker::SecondPass do
       end
     end
 
-    context 'when making change for 11 cents' do
+    xcontext 'when making change for 11 cents' do
       let(:number) { 11 }
 
       it 'finds four ways to make change' do
@@ -45,7 +45,7 @@ RSpec.describe ChangeMaker::SecondPass do
       end
     end
 
-    context 'when making change for 200 cents' do
+    xcontext 'when making change for 200 cents' do
       let(:number) { 50 }
 
       it 'finds a lot of ways to make change' do
@@ -53,7 +53,7 @@ RSpec.describe ChangeMaker::SecondPass do
       end
     end
 
-    context 'when making change for 1000 cents' do
+    xcontext 'when making change for 1000 cents' do
       let(:number) { 1000 }
 
       it 'finds a lot of ways to make change' do
