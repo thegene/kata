@@ -1,5 +1,6 @@
-require './change_maker/change_maker'
-RSpec.describe ChangeMaker do
+require './change_maker/first_pass'
+
+RSpec.describe ChangeMaker::FirstPass do
   context 'Given a ChangeMaker' do
     subject { described_class.new.make_change_for(number) }
 
